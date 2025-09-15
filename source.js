@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name 浙江工商大学抢课脚本
+// @name 浙江工商大学抢课抢课脚本
 // @namespace http://tampermonkey.net/
 // @version 1.04
 // @description 用于浙江工商大学抢课
@@ -24,16 +24,16 @@
     if (window.location.href.includes('jwglxt') && window.location.href.includes('gnmkdm=N253512')) {
 
 
-        
+
         let dataobjarr = [];
         //设置强制刷新网页的间隔 现在是 40s/每个选课
         const reloadinterval = 40 * 1000
 
-        
+
         let draggableBox;
 
 
-        
+
         function TextAlert(content) {
             if (draggableBox.querySelector('.isok').classList.contains('graberror')) {
                 draggableBox.querySelector('.isok').classList.remove('graberror')
@@ -484,6 +484,25 @@
                     TextError(`错误：找不到二级目录  ${nowdataobj.secondmenu}  ，请核对二级目录填写的是否正确\n这也有可能是当前网络卡顿引起`);
                 }
             }
+            function makesure() {
+                let class_issuccess = false
+                const class_rows = document.querySelector('#sub-panel-zzxk > div.panel-body.table-responsive');
+                const class_button = class_rows.querySelector('.btn');
+                class_button.click();
+                class_issuccess = true;
+                if (class_issuccess === false) {
+                    TextError(`错误：未找到选课按钮`);
+                }
+                let confirm_issucesss = false
+                const confirm_rows = document.querySelector('#addModal > div > div > div.modal-footer.ui-draggable-handle');
+                const confirm_button = confirm_rows.querySelector('.btn');
+                confirm_button.click();
+                class_issuccess = true;
+                if (class_issuccess === false) {
+                    TextError(`错误：未找到确认按钮`);
+                }
+            }
+
             function findtarget() {
                 let issuccess = false;
                 const rows = document.querySelectorAll('.body_tr');
@@ -518,6 +537,7 @@
                                     if (button.textContent === '选课') {
                                         button.click();
                                         setTimeout(clicksurebtn, 2000);
+                                        makesure()
                                     }
                                 }
                             }
@@ -526,6 +546,7 @@
                                 if (button.textContent === '选课') {
                                     button.click();
                                     setTimeout(clicksurebtn, 2000);
+                                    makesure()
                                 }
                             }
                         }
