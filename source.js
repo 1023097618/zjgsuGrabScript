@@ -581,6 +581,17 @@
                 if (confirmButton) {
                     confirmButton.click();
                 }
+                // 弹出二级界面后点击选课和确认
+                (function clickxuanke() {
+                    const rows = document.querySelector('#sub-panel-zzxk > div.panel-body.table-responsive');
+                    const button = rows.querySelector('.btn');
+                    button.click();
+                })();
+                (function clickqueren() {
+                    const rows = document.querySelector('#addModal > div > div > div.modal-footer.ui-draggable-handle');
+                    const button = rows.querySelector('.btn');
+                    button.click();
+                })();
                 setTimeout(reloadpage, 2000);
             }
 
